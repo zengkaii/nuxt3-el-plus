@@ -1,0 +1,48 @@
+{
+  "plugins": ["prettier"],
+  "extends": [
+    "plugin:vue/vue3-recommended",
+    "@nuxtjs/eslint-config-typescript"
+  ],
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "tsx": true
+    }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 2,
+        "singleQuote": true,
+        "semi": false,
+        "trailingComma": "none",
+        "arrowParens": "always",
+        "endOfLine": "auto",
+        "printWidth": 120,
+        "jsxSingleQuote": false
+      }
+    ],
+    "vue/singleline-html-element-content-newline":"off",
+    "arrow-parens":"off",
+    // "import/first": "off",
+    "space-before-function-paren":"off",
+    "vue/html-self-closing": "off",
+    "vue/html-indent": "off",
+    "vue/require-name-property": "error",
+    "vue/no-multiple-template-root": "off",
+    "vue/multi-word-component-names": "off",
+    "no-console": "off",
+    "vue/max-attributes-per-line": ["error", {
+      "singleline": {
+        "max": 10
+      },      
+      "multiline": {
+        "max": 1
+      }
+    }]
+  }
+}
