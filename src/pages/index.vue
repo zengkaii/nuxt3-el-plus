@@ -1,21 +1,14 @@
 <template>
-  <div class="home-container">
-    index
+  <div>
+    <h1>首页</h1>
+    <el-button type="primary" @click="showPage = 'page1'">page1</el-button>
+    <el-button type="primary" @click="showPage = 'page2'">page2</el-button>
+    <Page1 v-if="showPage === 'page1'" />
+    <Page2 v-if="showPage === 'page2'" />
   </div>
 </template>
-
 <script setup lang="ts">
-definePageMeta({
-  clientOnly: false
-})
-
+import Page1 from './page1.vue'
+import Page2 from './page2.vue'
+const showPage = ref('page1')
 </script>
-<script lang="ts">
-// name 声明 取的是路径转义
-export default {
-  name: '首页'
-}
-</script>
-<style lang="scss" scoped>
-
-</style>

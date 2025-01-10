@@ -4,9 +4,7 @@
 export default defineNuxtConfig({
   srcDir: 'src/',
   devtools: { enabled: true },
-
   css: [],
-
   modules: ['@element-plus/nuxt'],
 
   alias: {
@@ -17,8 +15,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {}
   },
+
   app: {
-    // baseURL: '/saas/' // 设置基础 URL
+    pageTransition: { name: 'page', mode: 'out-in' }
   },
 
   devServer: {
@@ -68,5 +67,7 @@ export default defineNuxtConfig({
       // })
       // compression({ threshold: 1025 })
     ]
-  }
+  },
+
+  compatibilityDate: '2024-09-30'
 })
