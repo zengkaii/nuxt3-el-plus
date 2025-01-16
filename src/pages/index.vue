@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>首页</h1>
+    <h1>home</h1>
     <el-button type="primary" @click="showPage = 'page1'">page1</el-button>
     <el-button type="primary" @click="showPage = 'page2'">page2</el-button>
     <Page1 v-if="showPage === 'page1'" />
