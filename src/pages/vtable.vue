@@ -1,37 +1,56 @@
 <template>
-  <div class="deliveryOrderx">
-    <ListTable ref="listTableRef" :records="records" height="1000px" :options="option" @on-click-cell="clickCell">
-      <ListColumn field="id" title="field" :width="100">
-        <template #customLayout="{ table, row, col, rect, record, height, width }">
-          <Group :height="height" :width="width" display="flex" flex-direction="row" flex-wrap="nowrap">
-            <Image id="icon0" :width="50" :height="50" :image="svg" :corner-radius="25" />
-          </Group>
-        </template>
-      </ListColumn>
-      <ListColumn field="id" title="fieldx" :width="100">
-        <template #customLayout="{ table, row, col, rect, record, height, width }">
-          <Group :height="height / 2" :width="width" display="flex" align-items="flex-end">
-            <Text ref="textRef" :text="getText(width)" :font-size="13" font-family="sans-serif" fill="black" />
-          </Group>
-        </template>
-      </ListColumn>
-    </ListTable>
-    <el-select
-      v-if="selectShow"
-      ref="selectRef"
-      v-model="select1"
-      :style="{
-        width: 100 + 'px',
-        top: selectTop + 'px',
-        left: selectLeft + 'px'
-      }"
-      filterable
-      placeholder=""
-      class="select-class"
-      @change="selectChange"
-    >
-      <el-option v-for="item in 10" :key="item" :label="item" :value="item"> </el-option>
-    </el-select>
+  <div class="page-container">
+    <el-auto-resizer class="a">
+      <template #default="{ height, width }">
+        <div class="v-table-content">
+          <ListTable
+            ref="listTableRef"
+            :records="records"
+            :height="height + 'px'"
+            :width="width + 'px'"
+            :options="option"
+            @on-click-cell="clickCell"
+          >
+            <ListColumn field="icon" title="field" :width="100">
+              <template #customLayout="{ table, row, col, rect, record, height, width }">
+                <Group :height="height" :width="width" display="flex" flex-direction="row" flex-wrap="nowrap">
+                  <Image id="icon0" :width="36" :height="36" :image="svg" :corner-radius="25" />
+                </Group>
+              </template>
+            </ListColumn>
+            <ListColumn field="id" title="fieldx" :width="100">
+              <template #customLayout="{ table, row, col, rect, record, height, width }">
+                <Group :height="height / 2" :width="width" display="flex" align-items="flex-end">
+                  <Text
+                    ref="textRef"
+                    :text="getText(row)"
+                    :font-size="13"
+                    font-family="sans-serif"
+                    :fill="row % 2 ? 'black' : 'red'"
+                  />
+                </Group>
+              </template>
+            </ListColumn>
+          </ListTable>
+          <el-select
+            v-if="selectShow"
+            ref="selectRef"
+            v-model="select1"
+            class="edit-select"
+            :style="{
+              height: '36px',
+              top: selectAttrs.top,
+              left: selectAttrs.left
+            }"
+            filterable
+            placeholder=""
+            @change="selectChange"
+          >
+            <el-option v-for="item in 10" :key="item" :label="item" :value="item"> </el-option>
+          </el-select>
+        </div>
+      </template>
+    </el-auto-resizer>
   </div>
 </template>
 
@@ -78,24 +97,6 @@ function getText(val) {
   return val || 'no data'
 }
 const records = ref([])
-const columns = [
-  {
-    field: 'id',
-    title: 'ID',
-    width: 80,
-    sort: true
-  },
-  {
-    field: 'lastName',
-    title: 'Full name'
-  },
-  {
-    field: 'address',
-    title: 'location\n(arcoVue-editor)',
-    width: 400,
-    editor: 'arcoVue-editor'
-  }
-]
 
 const option = {
   enableLineBreak: true,
@@ -110,20 +111,32 @@ const option = {
   }
 }
 const selectCellInfo = ref({})
+const selectAttrs = ref({
+  top: 0,
+  left: 0,
+  width: 0,
+  height: 0
+})
 function clickCell(data) {
   console.log(data)
-  selectCellInfo.value = {
-    field: data.field,
-    originData: data.originData,
-    row: data.row
+  if (data.field === 'id') {
+    selectCellInfo.value = {
+      field: data.field,
+      originData: data.originData,
+      row: data.row
+    }
+    selectTop.value = data.cellRange.top
+    selectLeft.value = data.cellRange.left
+    selectAttrs.value.top = `${data.cellRange.top}px`
+    selectAttrs.value.left = `${data.cellRange.left}px`
+    selectAttrs.value.top = `${data.cellRange.top}px`
+    selectAttrs.value.left = `${data.cellRange.left}px`
+    selectShow.value = true
+    setTimeout(() => {
+      selectRef.value.focus()
+      selectRef.value.toggleMenu()
+    })
   }
-  selectTop.value = data.cellRange.top
-  selectLeft.value = data.cellRange.left
-  selectShow.value = true
-  setTimeout(() => {
-    selectRef.value.focus()
-    selectRef.value.toggleMenu()
-  })
 }
 
 const listTableRef = ref(null)
@@ -134,7 +147,8 @@ function selectChange(val) {
       break
     }
   }
-  listTableRef.value.vTableInstance.setRecords(records.value)
+  // console.log(listTableRef.value.vTableInstance.changeCellValue, val)
+  // listTableRef.value.vTableInstance.changeCellValue(1, 1, 1)
 
   selectShow.value = false
 }
@@ -151,12 +165,18 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.deliveryOrderx {
+.page-container {
+  height: 100vh;
+  width: 100vw;
   position: relative;
-  .select-class {
+  .edit-select {
     position: absolute;
     top: 0;
     z-index: 100;
+    --el-select-width: 100px;
+    :deep(.el-select__wrapper) {
+      min-height: 36px;
+    }
   }
 }
 </style>
