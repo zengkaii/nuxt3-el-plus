@@ -1,5 +1,5 @@
 <template>
-  <div>page222</div>
+  <div @click="$testFunc">page222</div>
 </template>
 
 <script setup lang="ts"></script>
