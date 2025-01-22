@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nuxt prepare && nuxt dev",
+    "dev": "nuxt dev",
     "build": "nuxt build",
     "analyze": "nuxt analyze",
     "generate": "nuxt generate",
@@ -13,7 +13,7 @@
   "dependencies": {
     "element-plus": "2.9.3",
     "@element-plus/nuxt": "1.0.10",
-    "@visactor/vue-vtable": "1.15.0",
+    "@visactor/vue-vtable": "1.14.3",
     "nuxt": "3.15.2",
     "vue": "3.5.13"
   },

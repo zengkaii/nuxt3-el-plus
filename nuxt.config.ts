@@ -3,7 +3,7 @@
 // import { compression } from 'vite-plugin-compression2'
 export default defineNuxtConfig({
   srcDir: 'src/',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: [],
   modules: ['@element-plus/nuxt'],
 
@@ -48,6 +48,7 @@ export default defineNuxtConfig({
       // pure: ['console.log', 'console.error', 'console.warn', 'console.debug', 'console.trace']
     },
     server: {
+      hmr: true,
       proxy: {}
     },
     build: {

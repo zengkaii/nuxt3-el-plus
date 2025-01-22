@@ -1,66 +1,125 @@
 <template>
-  <div class="page-container">
-    <el-auto-resizer class="a">
-      <template #default="{ height, width }">
-        <div class="v-table-content">
-          <ListTable
-            ref="listTableRef"
-            :records="records"
-            :height="height + 'px'"
-            :width="width + 'px'"
-            :options="option"
-            @on-click-cell="clickCell"
-          >
-            <ListColumn field="icon" title="field" :width="100">
-              <template #customLayout="{ table, row, col, rect, record, height, width }">
-                <Group :height="height" :width="width" display="flex" flex-direction="row" flex-wrap="nowrap">
-                  <Image id="icon0" :width="36" :height="36" :image="svg" :corner-radius="25" />
-                </Group>
-              </template>
-            </ListColumn>
-            <ListColumn field="id" title="fieldx" :width="100">
-              <template #customLayout="{ table, row, col, rect, record, height, width }">
-                <Group :height="height / 2" :width="width" display="flex" align-items="flex-end">
-                  <Text
-                    ref="textRef"
-                    :text="getText(row)"
-                    :font-size="13"
-                    font-family="sans-serif"
-                    :fill="row % 2 ? 'black' : 'red'"
-                  />
-                </Group>
-              </template>
-            </ListColumn>
-          </ListTable>
-          <el-select
-            v-if="selectShow"
-            ref="selectRef"
-            v-model="select1"
-            class="edit-select"
-            :style="{
-              height: '36px',
-              top: selectAttrs.top,
-              left: selectAttrs.left
-            }"
-            filterable
-            placeholder=""
-            @change="selectChange"
-          >
-            <el-option v-for="item in 10" :key="item" :label="item" :value="item"> </el-option>
-          </el-select>
-        </div>
-      </template>
-    </el-auto-resizer>
+  <div>
+    <ClientOnly>
+      <div class="page-container">
+        <el-auto-resizer class="a">
+          <template #default="{ height, width }">
+            <div class="v-table-content">
+              <ListTable
+                ref="listTableRef"
+                :records="records"
+                :height="height + 'px'"
+                :width="width + 'px'"
+                :options="option"
+                @on-click-cell="clickCell"
+                @on-mouse-enter-cell="mouseenterCell"
+              >
+                <ListColumn color="red" title="svg" :width="100">
+                  <template #customLayout="{ table, row, col, rect, record, height, width }">
+                    <Group :height="height" :width="width" display="flex" flex-direction="row" flex-wrap="nowrap">
+                      <Text
+                        ref="textRef"
+                        :text="getText(record)"
+                        :font-size="13"
+                        font-family="sans-serif"
+                        stroke-style="red"
+                        stroke-rect="50, 50, 100, 50"
+                      />
+                      <Tag
+                        v-for="tag in 10"
+                        :key="tag"
+                        :text="tag"
+                        :text-style="{ fontSize: 10, fontFamily: 'sans-serif', fill: 'rgb(51, 101, 238)' }"
+                        :panel="{ visible: true, fill: '#f4f4f2', cornerRadius: 5 }"
+                        :space="5"
+                        :bounds-padding="[0, 0, 0, 5]"
+                      />
+                      <Image id="icon0" :width="36" :height="36" :image="svg" :corner-radius="25" />
+                    </Group>
+                  </template>
+                </ListColumn>
+                <ListColumn field="selectCol" title="selectCol" :width="120">
+                  <template #customLayout="{ table, row, col, rect, record, height, width }">
+                    <Group :height="height / 2" :width="width" display="flex" align-items="flex-end">
+                      <Text
+                        ref="textRef"
+                        :text="getText(record)"
+                        :font-size="13"
+                        font-family="sans-serif"
+                        stroke-style="red"
+                        stroke-rect="50, 50, 100, 50"
+                        :fill="row % 2 ? 'black' : 'red'"
+                      />
+                    </Group>
+                  </template>
+                </ListColumn>
+                <ListColumn title="操作" :width="120">
+                  <template #customLayout="{ table, row, col, rect, record, height, width }">
+                    <Group :height="height / 2" :width="width" display="flex" align-items="flex-end">
+                      <Text
+                        ref="textRef"
+                        text="签收"
+                        :font-size="13"
+                        font-family="sans-serif"
+                        stroke-style="red"
+                        stroke-rect="50, 50, 100, 50"
+                        :fill="row % 2 ? 'black' : 'red'"
+                        @click.stop="handleClick(1)"
+                      />
+                      <Text
+                        ref="textRef"
+                        text="删除"
+                        :font-size="13"
+                        font-family="sans-serif"
+                        stroke-style="red"
+                        stroke-rect="50, 50, 100, 50"
+                        :fill="row % 2 ? 'black' : 'red'"
+                        @click.stop="handleClick(2)"
+                      />
+                    </Group>
+                  </template>
+                </ListColumn>
+              </ListTable>
+              <el-select
+                v-if="selectShow"
+                ref="selectRef"
+                v-model="selectModelVal"
+                class="edit-select"
+                :style="{
+                  height: '36px',
+                  top: selectAttrs.top,
+                  left: selectAttrs.left
+                }"
+                filterable
+                placeholder=""
+                @change="selectChange"
+              >
+                <el-option v-for="item in 10" :key="item" :label="item" :value="item"> </el-option>
+              </el-select>
+              <el-tooltip effect="dark" content="Top Left prompts info" placement="top-start">
+                <div
+                  class="hover-div"
+                  :style="{
+                    top: toolTipObj.top,
+                    left: toolTipObj.left
+                  }"
+                >
+                  1111
+                </div>
+              </el-tooltip>
+            </div>
+          </template>
+        </el-auto-resizer>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ListTable, ListColumn, Group, Image, Text } from '@visactor/vue-vtable'
-const select1 = ref('')
+import { ListTable, ListColumn, Group, Image, Tag, Text } from '@visactor/vue-vtable'
+const selectModelVal = ref('')
 const selectRef = ref()
 const selectShow = ref(false)
-const selectTop = ref(0)
-const selectLeft = ref(0)
 
 function generateRandomString(length) {
   let result = ''
@@ -70,13 +129,13 @@ function generateRandomString(length) {
   }
   return result
 }
-
+// 生成模拟数据的方法
 const generatePersons = (count) => {
   return Array.from(new Array(count)).map((_, i) => {
     const first = generateRandomString(10)
     const last = generateRandomString(4)
     return {
-      id: i + 1,
+      selectCol: i + 1,
       email1: `${first}_${last}@xxx.com`,
       name: first,
       lastName: last,
@@ -94,10 +153,11 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill
 `
 
 function getText(val) {
-  return val || 'no data'
+  return val.selectCol || 'no data'
 }
 const records = ref([])
 
+const listTableRef = ref(null)
 const option = {
   enableLineBreak: true,
   autoWrapText: true,
@@ -117,20 +177,25 @@ const selectAttrs = ref({
   width: 0,
   height: 0
 })
+
+/**
+ * 单元格的点击事件
+ * @param data
+ */
 function clickCell(data) {
   console.log(data)
-  if (data.field === 'id') {
+  if (data.field === 'selectCol') {
+    selectModelVal.value = data.dataValue
+    console.log(selectModelVal.value, 'selectModelVal.value ')
     selectCellInfo.value = {
       field: data.field,
       originData: data.originData,
-      row: data.row
+      row: data.row,
+      col: data.col
     }
-    selectTop.value = data.cellRange.top
-    selectLeft.value = data.cellRange.left
     selectAttrs.value.top = `${data.cellRange.top}px`
     selectAttrs.value.left = `${data.cellRange.left}px`
-    selectAttrs.value.top = `${data.cellRange.top}px`
-    selectAttrs.value.left = `${data.cellRange.left}px`
+    selectAttrs.value.width = `${data.cellRange.width}px`
     selectShow.value = true
     setTimeout(() => {
       selectRef.value.focus()
@@ -139,27 +204,47 @@ function clickCell(data) {
   }
 }
 
-const listTableRef = ref(null)
 function selectChange(val) {
-  for (let index = 0; index < records.value.length; index++) {
-    if (records.value[index].id === selectCellInfo.value.originData.id) {
-      records.value[index][selectCellInfo.value.field] = val
-      break
-    }
-  }
-  // console.log(listTableRef.value.vTableInstance.changeCellValue, val)
-  // listTableRef.value.vTableInstance.changeCellValue(1, 1, 1)
+  listTableRef.value.vTableInstance.changeCellValue(selectCellInfo.value.col, selectCellInfo.value.row, val)
 
   selectShow.value = false
 }
 
+const toolTipObj = ref({
+  top: 0,
+  left: 0,
+  width: 0,
+  originData: {},
+  row: 0,
+  col: 0,
+  visible: false
+})
+function mouseenterCell(data) {
+  if (data.field === 'svg') {
+    console.log(data)
+    console.log(selectModelVal.value, 'selectModelVal.value ')
+
+    toolTipObj.value = {
+      top: `${data.cellRange.top}px`,
+      left: `${data.cellRange.left}px`,
+      width: `${data.cellRange.width}px`,
+      originData: data.originData,
+      row: data.row,
+      col: data.col
+    }
+    setTimeout(() => {
+      toolTipObj.value.visible = true
+    })
+  }
+}
+
+function handleClick(val) {
+  console.log(val)
+}
 onMounted(() => {
-  console.time('init1')
-  records.value = generatePersons(300)
-  console.timeEnd('init1')
-  console.time('init2')
+  records.value = generatePersons(30000)
   nextTick(() => {
-    console.timeEnd('init2')
+    console.log(listTableRef.value.vTableInstance)
   })
 })
 </script>
@@ -173,10 +258,13 @@ onMounted(() => {
     position: absolute;
     top: 0;
     z-index: 100;
-    --el-select-width: 100px;
+    --el-select-width: v-bind(selectAttrs.width);
     :deep(.el-select__wrapper) {
       min-height: 36px;
     }
+  }
+  .hover-div {
+    position: absolute;
   }
 }
 </style>
