@@ -14,7 +14,7 @@
                 @on-click-cell="clickCell"
                 @on-mouse-enter-cell="mouseenterCell"
               >
-                <ListColumn color="red" title="svg" :width="100">
+                <ListColumn color="red" title="svg" field="svg" :width="100">
                   <template #customLayout="{ table, row, col, rect, record, height, width }">
                     <Group :height="height" :width="width" display="flex" flex-direction="row" flex-wrap="nowrap">
                       <Text
@@ -25,7 +25,7 @@
                         stroke-style="red"
                         stroke-rect="50, 50, 100, 50"
                       />
-                      <Tag
+                      <!-- <Tag
                         v-for="tag in 10"
                         :key="tag"
                         :text="tag"
@@ -33,7 +33,7 @@
                         :panel="{ visible: true, fill: '#f4f4f2', cornerRadius: 5 }"
                         :space="5"
                         :bounds-padding="[0, 0, 0, 5]"
-                      />
+                      /> -->
                       <Image id="icon0" :width="36" :height="36" :image="svg" :corner-radius="25" />
                     </Group>
                   </template>
@@ -96,16 +96,16 @@
               >
                 <el-option v-for="item in 10" :key="item" :label="item" :value="item"> </el-option>
               </el-select>
-              <el-tooltip effect="dark" content="Top Left prompts info" placement="top-start">
+              <el-tooltip effect="dark" content="没拿到原始数据哇" :visible="toolTipObj.visible" placement="top-start">
                 <div
                   class="hover-div"
                   :style="{
+                    height: '36px',
+                    width: toolTipObj.width,
                     top: toolTipObj.top,
                     left: toolTipObj.left
                   }"
-                >
-                  1111
-                </div>
+                ></div>
               </el-tooltip>
             </div>
           </template>
@@ -135,6 +135,7 @@ const generatePersons = (count) => {
     const first = generateRandomString(10)
     const last = generateRandomString(4)
     return {
+      svg: i + 1,
       selectCol: i + 1,
       email1: `${first}_${last}@xxx.com`,
       name: first,
@@ -183,7 +184,6 @@ const selectAttrs = ref({
  * @param data
  */
 function clickCell(data) {
-  console.log(data)
   if (data.field === 'selectCol') {
     selectModelVal.value = data.dataValue
     console.log(selectModelVal.value, 'selectModelVal.value ')
@@ -205,8 +205,8 @@ function clickCell(data) {
 }
 
 function selectChange(val) {
+  // changeCellValue 方法会重置列宽吗？
   listTableRef.value.vTableInstance.changeCellValue(selectCellInfo.value.col, selectCellInfo.value.row, val)
-
   selectShow.value = false
 }
 
@@ -220,22 +220,25 @@ const toolTipObj = ref({
   visible: false
 })
 function mouseenterCell(data) {
-  if (data.field === 'svg') {
-    console.log(data)
-    console.log(selectModelVal.value, 'selectModelVal.value ')
+  // 这里不是说跟click 的模型一样吗
+  // 文档地址 https://visactor.io/vtable/api/events#MOUSEENTER_CELL
+  toolTipObj.value.visible = false
+  // console.log(data)
+  nextTick(() => {
+    if (data.col === 0) {
+      console.log(data)
 
-    toolTipObj.value = {
-      top: `${data.cellRange.top}px`,
-      left: `${data.cellRange.left}px`,
-      width: `${data.cellRange.width}px`,
-      originData: data.originData,
-      row: data.row,
-      col: data.col
-    }
-    setTimeout(() => {
+      toolTipObj.value = {
+        top: `${data.cellRange.top}px`,
+        left: `${data.cellRange.left}px`,
+        width: `${data.cellRange.width}px`,
+        originData: data.originData,
+        row: data.row,
+        col: data.col
+      }
       toolTipObj.value.visible = true
-    })
-  }
+    }
+  })
 }
 
 function handleClick(val) {
