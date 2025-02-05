@@ -2,7 +2,7 @@
   <div>
     <ClientOnly>
       <div class="page-container">
-        <el-button type="primary" @click="modifyCell(1, 2)">修改[1,2]单元格的值</el-button>
+        <el-button type="primary" @click="modifyCell(1, 2)">修改[1,2]单元格的值。</el-button>
         <el-auto-resizer class="auto-size" style="height: calc(100vh - 32px)">
           <template #default="{ height, width }">
             <div class="v-table-content">
@@ -237,16 +237,16 @@ function mouseenterCell(data) {
   // 这里不是说跟click 的模型一样吗
   // 文档地址 https://visactor.io/vtable/api/events#MOUSEENTER_CELL
   toolTipObj.value.visible = false
-  // console.log(data)
+
   nextTick(() => {
     if (data.col === 0) {
-      console.log(data)
-
+      // console.log(data)
+      const _data = listTableRef.value.vTableInstance.getCellOriginRecord(data.col, data.row)
       toolTipObj.value = {
         top: `${data.cellRange.top}px`,
         left: `${data.cellRange.left}px`,
         width: `${data.cellRange.width}px`,
-        originData: data.originData,
+        originData: _data,
         row: data.row,
         col: data.col
       }
