@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 onMounted(() => {
-  console.log('page1 mounted')
+  console.log('page111 mounted')
 })
 </script>
 
