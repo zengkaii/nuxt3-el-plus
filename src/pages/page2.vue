@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
-    <div>page22222</div>
+    <!-- save code ，whole page will  refresh -->
+    <div>page22</div>
   </ClientOnly>
 </template>
 

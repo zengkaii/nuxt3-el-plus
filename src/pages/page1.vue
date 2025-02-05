@@ -1,12 +1,11 @@
 <template>
-  <ClientOnly>
-    <div>page1</div>
-  </ClientOnly>
+  <div>page11</div>
 </template>
 
 <script setup lang="ts">
 onMounted(() => {
-  console.log('page111 mounted')
+  // 'page1 mounted' console  twice
+  console.log('page1111 mounted')
 })
 </script>
 
