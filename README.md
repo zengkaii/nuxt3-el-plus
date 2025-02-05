@@ -16,4 +16,3 @@ npm run dev
 
 ```
 
-1. click button page2
