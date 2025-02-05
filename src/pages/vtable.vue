@@ -2,7 +2,8 @@
   <div>
     <ClientOnly>
       <div class="page-container">
-        <el-auto-resizer class="a">
+        <el-button type="primary" @click="modifyCell(1, 2)">修改[1,2]单元格的值</el-button>
+        <el-auto-resizer class="auto-size" style="height: calc(100vh - 32px)">
           <template #default="{ height, width }">
             <div class="v-table-content">
               <ListTable
@@ -14,7 +15,7 @@
                 @on-click-cell="clickCell"
                 @on-mouse-enter-cell="mouseenterCell"
               >
-                <ListColumn color="red" title="svg" field="svg" :width="100">
+                <ListColumn color="red" title="svg" field="svg" width="200">
                   <template #customLayout="{ table, row, col, rect, record, height, width }">
                     <Group :height="height" :width="width" display="flex" flex-direction="row" flex-wrap="nowrap">
                       <Text
@@ -38,7 +39,7 @@
                     </Group>
                   </template>
                 </ListColumn>
-                <ListColumn field="selectCol" title="selectCol" :width="120">
+                <ListColumn field="selectCol" title="selectCol" width="200">
                   <template #customLayout="{ table, row, col, rect, record, height, width }">
                     <Group :height="height / 2" :width="width" display="flex" align-items="flex-end">
                       <Text
@@ -53,7 +54,7 @@
                     </Group>
                   </template>
                 </ListColumn>
-                <ListColumn title="操作" :width="120">
+                <ListColumn title="操作" width="200">
                   <template #customLayout="{ table, row, col, rect, record, height, width }">
                     <Group :height="height / 2" :width="width" display="flex" align-items="flex-end">
                       <Text
@@ -93,10 +94,11 @@
                 filterable
                 placeholder=""
                 @change="selectChange"
+                @visible-change="selectVisibleChange"
               >
                 <el-option v-for="item in 10" :key="item" :label="item" :value="item"> </el-option>
               </el-select>
-              <el-tooltip effect="dark" content="没拿到原始数据哇" :visible="toolTipObj.visible" placement="top-start">
+              <el-tooltip effect="dark" content="没拿到原始数据哇" :visible="toolTipObj.visible" placement="top">
                 <div
                   class="hover-div"
                   :style="{
@@ -162,14 +164,16 @@ const listTableRef = ref(null)
 const option = {
   enableLineBreak: true,
   autoWrapText: true,
-  limitMaxAutoWidth: 700,
-  heightMode: 'autoHeight',
-  editCellTrigger: 'click',
-  keyboardOptions: {
-    copySelected: true,
-    pasteValueToCell: true,
-    selectAllOnCtrlA: true
-  }
+  autoFillWidth: true,
+  // limitMaxAutoWidth: 700,
+
+  heightMode: 'autoHeight'
+  // editCellTrigger: 'click'
+  // keyboardOptions: {
+  //   copySelected: true,
+  //   pasteValueToCell: true,
+  //   selectAllOnCtrlA: true
+  // }
 }
 const selectCellInfo = ref({})
 const selectAttrs = ref({
@@ -206,8 +210,18 @@ function clickCell(data) {
 
 function selectChange(val) {
   // changeCellValue 方法会重置列宽吗？
+  // console
   listTableRef.value.vTableInstance.changeCellValue(selectCellInfo.value.col, selectCellInfo.value.row, val)
   selectShow.value = false
+}
+function selectVisibleChange(val) {
+  if (!val) {
+    selectShow.value = false
+  }
+}
+
+function modifyCell(col, row) {
+  listTableRef.value.vTableInstance.changeCellValue(col, row, Math.ceil(Math.random() * 100))
 }
 
 const toolTipObj = ref({
@@ -256,7 +270,9 @@ onMounted(() => {
 .page-container {
   height: 100vh;
   width: 100vw;
-  position: relative;
+  .v-table-content {
+    position: relative;
+  }
   .edit-select {
     position: absolute;
     top: 0;

@@ -2,6 +2,13 @@
 // import viteCompression from 'vite-plugin-compression'
 // import { compression } from 'vite-plugin-compression2'
 export default defineNuxtConfig({
+  $development: {
+    vite: {
+      server: {
+        allowedHosts: true
+      }
+    }
+  },
   srcDir: 'src/',
   devtools: { enabled: false },
   css: [],
@@ -48,7 +55,8 @@ export default defineNuxtConfig({
       // pure: ['console.log', 'console.error', 'console.warn', 'console.debug', 'console.trace']
     },
     server: {
-      hmr: true,
+      // hmr: true,
+      // allowedHosts: true,
       proxy: {}
     },
     build: {
