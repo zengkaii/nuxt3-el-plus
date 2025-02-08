@@ -12,4 +12,7 @@
   opacity: 0;
   filter: blur(1rem);
 }
+.vxe-table--render-default .vxe-table--body-wrapper {
+  background-color: transparent !important;
+}
 </style>

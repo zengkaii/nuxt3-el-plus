@@ -1,8 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container>
-      <NuxtPage> </NuxtPage>
-    </el-container>
+    <NuxtPage> </NuxtPage>
   </div>
 </template>
 

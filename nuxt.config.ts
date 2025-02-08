@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   devtools: { enabled: true },
   css: [],
-  modules: ['@element-plus/nuxt'],
+  // modules: ['@element-plus/nuxt'],
 
   alias: {
     '@/src': '/src'
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
 
   devServer: {
     // host: '0.0.0.0', // 打开本地开发就会变得很慢
-    port: 5000
+    port: 2000
   },
 
   routeRules: {
