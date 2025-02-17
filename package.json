@@ -13,10 +13,7 @@
   "dependencies": {
     "@element-plus/nuxt": "1.0.10",
     "@lottiefiles/lottie-player": "^2.0.12",
-    "@visactor/vtable-gantt": "^1.16.0",
-    "@visactor/vue-vtable": "1.15.2",
     "element-plus": "2.9.3",
-    "lottie-to-svg": "^1.1.0",
     "nuxt": "3.15.4",
     "vue": "3.5.13"
   },
