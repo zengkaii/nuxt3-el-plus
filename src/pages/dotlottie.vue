@@ -1,18 +1,21 @@
 <template>
-  <div>
-    <DotLottieVue
-      style="height: 500px; width: 500px"
+  <ClientOnly>
+    <lottie-player
+      v-if="showLottie"
       autoplay
       loop
-      mode="bounce"
-      src="wired-outline-63-home-hover-3d-roll.json"
+      style="width: 400px"
+      src="https://lottie.host/844ba406-b54f-4eff-b366-c1b38f9fc322/pYBf9Lz5LX.json"
+      speed="1"
     />
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { DotLottieVue } from '@lottiefiles/dotlottie-vue'
-// import animation from './animation.lottie'
+const showLottie = ref(false)
+onMounted(() => {
+  nextTick(() => {
+    showLottie.value = true
+  })
+})
 </script>
-
-<style scoped></style>

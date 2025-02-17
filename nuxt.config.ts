@@ -22,14 +22,19 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {}
   },
-
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => ['lottie-player'].includes(tag)
+    }
+  },
+  plugins: ['~/plugins/lottie-player.client.ts'],
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
+    // pageTransition: { name: 'page', mode: 'out-in' }
   },
 
   devServer: {
     // host: '0.0.0.0', // 打开本地开发就会变得很慢
-    port: 5000
+    port: 2000
   },
 
   routeRules: {
