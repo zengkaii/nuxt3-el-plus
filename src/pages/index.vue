@@ -3,12 +3,12 @@
     <ClientOnly>
       <div>
         <!-- <p>
-      <vxe-button @click="loadData(500)">加载500行</vxe-button>
-      <vxe-button @click="loadData(1000)">加载1k行</vxe-button>
-      <vxe-button @click="loadData(5000)">加载5k行</vxe-button>
-      <vxe-button @click="loadData(10000)">加载1w行</vxe-button>
-      <vxe-button @click="loadData(30000)">加载3w行</vxe-button>
-    </p> -->
+          <vxe-button @click="loadData(500)">加载500行</vxe-button>
+          <vxe-button @click="loadData(1000)">加载1k行</vxe-button>
+          <vxe-button @click="loadData(5000)">加载5k行</vxe-button>
+          <vxe-button @click="loadData(10000)">加载1w行</vxe-button>
+          <vxe-button @click="loadData(30000)">加载3w行</vxe-button>
+        </p> -->
         <vxe-table
           ref="tableRef"
           border
@@ -16,7 +16,7 @@
           height="600"
           show-overflow="xx"
           :column-config="{ resizable: true }"
-          :scroll-y="{ enabled: true, gt: 0 }"
+          :scroll-y="{ enabled: true, gt: 0, immediate: true, mode: 'default' }"
           :scroll-x="{ enabled: true, gt: 0 }"
           :row-config="{
             // useKey: true,
@@ -126,3 +126,8 @@ onMounted(() => {
   })
 })
 </script>
+<style lang="scss">
+.vxe-table--render-default .vxe-table--body-wrapper {
+  background-color: transparent !important;
+}
+</style>
