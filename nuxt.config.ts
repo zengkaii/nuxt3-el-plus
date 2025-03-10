@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   },
 
   devServer: {
-    port: 5000
+    port: 2000
   },
 
   routeRules: {

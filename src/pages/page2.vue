@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <!-- save code ，whole page will  refresh -->
-    <div>page22</div>
+    <div>page222</div>
   </ClientOnly>
 </template>
 

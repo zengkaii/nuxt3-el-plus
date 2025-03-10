@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>this is home</h1>
+    <h1>this is home1</h1>
     <button style="margin-right: 20px" @click="showPage = 'page1'">page1</button>
     <button @click="showPage = 'page2'">page2</button>
     <Page1 v-if="showPage === 'page1'" />
