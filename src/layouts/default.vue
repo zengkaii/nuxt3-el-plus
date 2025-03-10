@@ -1,6 +1,7 @@
 <template>
   <div class="common-layout">
-    <NuxtPage> </NuxtPage>
+    layout
+    <slot />
   </div>
 </template>
 
