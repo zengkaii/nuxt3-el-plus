@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       isCustomElement: (tag) => ['lottie-player'].includes(tag)
     }
   },
-  plugins: ['~/plugins/lottie-player.client.ts'],
+  // plugins: ['~/plugins/lottie-player.client.ts'],
   app: {
     // pageTransition: { name: 'page', mode: 'out-in' }
   },
