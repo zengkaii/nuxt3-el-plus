@@ -1,5 +1,5 @@
 <template>
-  <div>comBb</div>
+  <div>comB</div>
 </template>
 
 <script setup lang="ts">

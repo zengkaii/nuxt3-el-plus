@@ -10,20 +10,20 @@
     </div>
     <div style="margin-top: 100px">
       <div>components in components : it will not refresh</div>
-      <button style="margin-right: 20px" @click="showPage2 = 'pageA'">pageA</button>
-      <button @click="showPage2 = 'pageB'">pageB</button>
-      <PageA v-if="showPage2 === 'pageA'" />
-      <PageB v-if="showPage2 === 'pageB'" />
+      <button style="margin-right: 20px" @click="showPage2 = 'comA'">pageA</button>
+      <button @click="showPage2 = 'comB'">pageB</button>
+      <ComA v-if="showPage2 === 'comA'" />
+      <ComB v-if="showPage2 === 'comB'" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import PageA from '../components/comA.vue'
-import PageB from '../components/comB.vue'
+import ComA from '../components/comA.vue'
+import ComB from '../components/comB.vue'
 import Page1 from './page1.vue'
 import Page2 from './page2.vue'
 const showPage = ref('page1')
-const showPage2 = ref('pageA')
+const showPage2 = ref('comA')
 onMounted(() => {
   console.log('index mounted')
 })

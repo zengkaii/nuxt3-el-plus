@@ -20,6 +20,9 @@ export default defineNuxtConfig({
     '@/src': '/src'
   },
 
+  pages: {
+    pattern: ['**/index.vue', '**/[id].vue']
+  },
   // elementPlus: {},
   runtimeConfig: {
     public: {}
